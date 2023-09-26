@@ -1,0 +1,54 @@
+/* NewBlogpostForm.css */
+
+/* Stijl voor de container van het formulier */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.form-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Stijl voor formulieronderdelen */
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Stijl voor foutmeldingen */
+.form-error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+/* Stijl voor de verzendknop */
+.form-submit {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-submit:hover {
+    background-color: #0056b3;
+}
