@@ -7,16 +7,16 @@ function Navigation() {
            <div className="nav-container">
                <Link to="/"><h4>Biovgventure</h4></Link>
                
-               <ul>
-                   <li>
-                       <NavLink
+               <ul className="navigation-labels">
+
+                   <li className="navigation-label">                       <NavLink
                            className={({isActive}) => isActive === true ? "active-menu-link" : "default-menu-link"}
                            to="/">
                            Home
                        </NavLink>
                    </li>
 
-                   <li>
+                   <li className="navigation-label">
                        <NavLink
                            className={({isActive}) => isActive === true ? "active-menu-link" : "default-menu-link"}
                            to="/new">
@@ -24,7 +24,7 @@ function Navigation() {
                        </NavLink>
                    </li>
 
-                   <li>
+                   <li className="navigation-label">
                        <NavLink
                            className={({isActive}) => isActive === true ? "active-menu-link" : "default-menu-link"}
                            to="/blogposts">
@@ -32,13 +32,13 @@ function Navigation() {
                        </NavLink>
                    </li>
 
-                   <li>
-                       <NavLink
-                           className={({isActive}) => isActive === true ? "active-menu-link" : "default-menu-link"}
-                           to="/blogposts/:blogId">
-                           Blogpost Details
-                       </NavLink>
-                   </li>
+                   {/*<li className="navigation-label">                       */}
+                   {/*    <NavLink*/}
+                   {/*        className={({isActive}) => isActive === true ? "active-menu-link" : "default-menu-link"}*/}
+                   {/*        to="/blogposts/:blogId">*/}
+                   {/*        Blogpost Details*/}
+                   {/*    </NavLink>*/}
+                   {/*</li>*/}
                </ul>
            </div>
        </nav>
