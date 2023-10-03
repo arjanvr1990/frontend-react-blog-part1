@@ -1,6 +1,7 @@
 import "./newBlogpostPage.css"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 function NewBlogpost() {
 
@@ -14,6 +15,30 @@ function NewBlogpost() {
 
     const [formErrors, setFormErrors] = useState({});
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [highestId, setHighestId] = useState(0);
+
+
+    useEffect(() => {
+        // Haal de blogposts op en zoek het hoogste ID
+        async function fetchBlogPosts() {
+            try {
+                const result = await axios.get("http://localhost:3000/posts");
+                const blogPosts = result.data;
+                let maxId = 0;
+                for (const post of blogPosts) {
+                    if (post.id > maxId) {
+                        maxId = post.id;
+                    }
+                }
+                setHighestId(maxId);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        fetchBlogPosts(); // Hier wacht je op de Promise met await
+    }, []);
+
 
     const calculateReadTime = (content) => {
         const words = content.split(' ').length;
@@ -21,8 +46,40 @@ function NewBlogpost() {
         return readTime;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+
+    // async function handleSubmit() {
+    //     e.preventDefault();
+    //     const generateNewId = () => {
+    //         return highestId + 1;
+    //     };
+    //
+    //     // Validatie van de ingevulde gegevens
+    //     const errors = {};
+    //     if (!formData.title) {
+    //         errors.title = 'Titel is verplicht';
+    //     }
+    //     if (!formData.subtitle) {
+    //         errors.subtitle = 'Subtitel is verplicht';
+    //     }
+    //     if (!formData.author) {
+    //         errors.author = 'Auteur is verplicht';
+    //     }
+    //     if (!formData.content) {
+    //         errors.content = 'Bericht is verplicht';
+    //     }
+    //
+    //     setFormErrors(errors);
+    //
+    //     if (Object.keys(errors).length > 0) {
+    //         return;
+    //     }
+
+    async function handleSubmit(e) {
+        e.preventDefault(); // Voorkom standaardgedrag van het formulier
+
+        const generateNewId = () => {
+            return highestId + 1;
+        };
 
         // Validatie van de ingevulde gegevens
         const errors = {};
@@ -39,20 +96,29 @@ function NewBlogpost() {
             errors.content = 'Bericht is verplicht';
         }
 
+        setFormErrors(errors); // Update de foutmeldingen
+
         if (Object.keys(errors).length > 0) {
-            setFormErrors(errors);
-            return;
+            return; // Stop met verzenden als er fouten zijn
         }
+
+
+
+
+
+
 
         // Bereken shares, comments, timestamp en readTime
         const shares = 0;
         const comments = 0;
         const timestamp = new Date().toISOString();
         const readTime = calculateReadTime(formData.content);
+        const newId = generateNewId();
 
         // Voeg gegevens toe aan de blogpost
         const newBlogPost = {
             ...formData,
+            id: newId,
             shares,
             comments,
             created: timestamp,
@@ -75,7 +141,14 @@ function NewBlogpost() {
             author: '',
             content: '',
         });
-    };
+
+        try {
+            const response = await axios.post("http://localhost:3000/posts", newBlogPost)
+            console.log(response.data);
+            } catch (e) {
+            console.error(e)
+        }
+    }
 
 
     return (

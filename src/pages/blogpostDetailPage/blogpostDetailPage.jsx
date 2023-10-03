@@ -1,6 +1,6 @@
 import "./blogpostDetailPage.css"
 import React, {useState, useEffect} from 'react';
-import { Link, useParams } from 'react-router-dom';
+import {Link, useParams, useNavigate} from 'react-router-dom';
 // import posts from '../../constants/data.json';
 import axios from "axios";
 // import { blogPosts as blogposts } from "../blogpostPage/blogpostPage.jsx";
@@ -9,6 +9,7 @@ function BlogpostDetailPage() {
     const { blogId } = useParams();
     const [blogPost, setBlogPost] = useState([]);
     // const blogPost = posts.find((post) => post.id === parseInt(blogId));
+    const navigate = useNavigate();
 
     async function getBlogPostById(blogId) {
         try {
@@ -20,13 +21,31 @@ function BlogpostDetailPage() {
 
     }
     // getBlogPostById(blogId)
-
+    //
     // useEffect(() => {
     //     getBlogPostById(blogId);
     // }, [blogId]);
 
+
+
+
+
+    useEffect(() => {
+        getBlogPostById(blogId);
+    }, [blogId]);
+
     if (!blogPost) {
-        return <div>Blogpost niet gevonden</div>;
+        return <h1>Blogpost niet gevonden</h1>;
+    }
+
+    async function deletePostRequest() {
+        try {
+            const deleteData = await axios.delete(`http://localhost:3000/posts/${blogId}`);
+            console.log(deleteData.data);
+            navigate('/blogposts');
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     return (
@@ -45,10 +64,11 @@ function BlogpostDetailPage() {
                 <p className="blog-actions">
                     {blogPost.comments} reacties - {blogPost.shares} keer gedeeld
                 </p>
+                <p>id: {blogPost.id}</p>
                 <Link to="/blogposts" className="back-link">Terug naar overzicht</Link>
             </>
                 )}
-
+            <button type="button" onClick={deletePostRequest}>delete blogpost</button>
         </div>
     );
 }
