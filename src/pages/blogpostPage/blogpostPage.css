@@ -1,0 +1,56 @@
+/* BlogpostPage.css */
+
+/* Stijl voor de pagina-container */
+.blog-layout {
+
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Stijl voor de lijst van blogposts */
+.blog-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex; /* Hier wordt Flexbox toegepast */
+    flex-direction: column; /* Plaats items in een kolom */
+    align-items: flex-start; /* Optioneel: aan de linkerkant uitlijnen */
+}
+
+/* Stijl voor de titel */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Stijl voor de lijst van blogposts */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Stijl voor elk blogpost-item in de lijst */
+li {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Stijl voor de link naar de blogpost-detailpagina */
+a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Stijl voor de auteur */
+.author {
+    font-style: italic;
+    color: #555;
+}
+
+/* Stijl voor reacties en delen */
+.stats {
+    color: #555;
+}
