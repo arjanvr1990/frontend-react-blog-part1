@@ -1,15 +1,17 @@
 // BlogpostPage.jsx
 import React from 'react';
+import {useState} from "react";
 import { Link } from 'react-router-dom';
-import posts from '../../constants/data.json';
 import './BlogpostPage.css';
 import axios from "axios"; // Importeer de CSS
 
 function BlogpostPage() {
-    async function jsonData() {
+    const [blogPosts, setBlogPosts] = useState([]);
+    async function dataApi() {
         try {
             const result = await axios.get("http://localhost:3000/posts");
             console.log(result.data);
+            setBlogPosts(result.data);
         } catch (e) {
             console.error(e);
         }
@@ -19,7 +21,7 @@ function BlogpostPage() {
 
     async function getBlogPostById(postId) {
         try {
-            const result = await axios.get("http://localhost:3000/posts/${postId}");
+            const result = await axios.get(`http://localhost:3000/posts/${postId}`);
             console.log(result.data);
         } catch (e) {
             console.error(e);
@@ -78,24 +80,28 @@ function BlogpostPage() {
         }
     }
 
+
     return (
         <div className="blog-layout">
 
-            <h1>Totaal aantal blogposts: {posts.length}</h1>
+            <h1>Totaal aantal blogposts: {blogPosts.length}</h1>
+            <button type="button" onClick={dataApi}>Haal Posts Op</button>
             <ul className="blog-list">
-                {posts.map((blogPost) => (
-                    <li key={blogPost.id}>
-                        <Link to={`/blogposts/${blogPost.id}`} className="blog-title">
-                            {blogPost.title}
+                {blogPosts.map((posts) => (
+                    <li key={posts.id}>
+                        <Link to={`/blogposts/${posts.id}`} className="blog-title">
+                            {posts.title}
                         </Link>
-                        (<span className="author">{blogPost.author}</span>)
+                        (<span className="author">{posts.author}</span>)
                         <br />
-                        {blogPost.comments} reacties - {blogPost.shares} keer gedeeld
+                        {posts.comments} reacties - {posts.shares} keer gedeeld
                     </li>
                 ))}
             </ul>
 
-            <button type="button" onClick={jsonData}>JSONData</button>
+
+
+            <button type="button" onClick={dataApi}>JSONData</button>
             <button type="button" onClick={() => getBlogPostById(6)}>blog id 6</button>
             <button type="button" onClick={handlePostRequest}>Post knop</button>
             <button type="button" onClick={deletePostRequest}>delete Post</button>
@@ -104,4 +110,6 @@ function BlogpostPage() {
     );
 }
 
+// export { blogPosts as posts };
 export default BlogpostPage;
+
