@@ -1,12 +1,13 @@
 // BlogpostPage.jsx
 import React from 'react';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import './BlogpostPage.css';
 import axios from "axios"; // Importeer de CSS
 
 function BlogpostPage() {
     const [blogPosts, setBlogPosts] = useState([]);
+
     async function dataApi() {
         try {
             const result = await axios.get("http://localhost:3000/posts");
@@ -16,6 +17,11 @@ function BlogpostPage() {
             console.error(e);
         }
     }
+
+    useEffect(() => {
+        dataApi();
+    }, []);
+
 
     // jsonData();
 
@@ -85,7 +91,7 @@ function BlogpostPage() {
         <div className="blog-layout">
 
             <h1>Totaal aantal blogposts: {blogPosts.length}</h1>
-            <button type="button" onClick={dataApi}>Haal Posts Op</button>
+            {/*<button type="button" onClick={dataApi}>Haal Posts Op</button>*/}
             <ul className="blog-list">
                 {blogPosts.map((posts) => (
                     <li key={posts.id}>

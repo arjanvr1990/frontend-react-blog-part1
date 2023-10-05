@@ -51,7 +51,7 @@ function BlogpostDetailPage() {
     return (
 
         <div className="blog-detail">
-            <button type="button" onClick={() => getBlogPostById(blogId)}>haal blogdetails op</button>
+            {/*<button type="button" onClick={() => getBlogPostById(blogId)}>haal blogdetails op</button>*/}
 
             {blogPost && (
             <>
